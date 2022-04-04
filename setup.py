@@ -7,7 +7,7 @@ setuptools.setup(
   name="gh-tools",
   version="0.1",
   author="kurages",
-  author_email="kurages.git@outlook.jp",
+  author_email="kurages.git@outlook.com",
   description="",
   url="https://github.com/kurages/github_tools",
   packages=setuptools.find_packages(),
