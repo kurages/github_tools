@@ -61,7 +61,7 @@ class Auth:
 			elif error == "slow_down":
 				time.sleep(res["interval"])
 			elif error == "access_denied":
-				return (1, "access_denied")
+				return (1, error)
 			elif error in ["expired_token", "incorrect_device_code"]:
 				return (2, error)
 			else:
