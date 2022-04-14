@@ -5,13 +5,16 @@ from requests import (
 	delete,
 	Response
 )
-from .config import Config
+
 from .account import Account
 from .auth import Auth
+from .config import Config
+from .gist import Gist
+from .issues import Issues
 from .repo import Repo
 from .user import User
 
-class Tools(Account, Auth, Repo, User):
+class Tools(Account, Auth, Gist, Issues, Repo, User):
 	cmd = os.path.splitext(os.path.basename(__file__))[0]
 
 	def __init__(self):
@@ -25,6 +28,8 @@ class Tools(Account, Auth, Repo, User):
 
 		Account.__init__(self)
 		Auth.__init__(self)
+		Gist.__init__(self)
+		Issues.__init__(self)
 		Repo.__init__(self)
 		User.__init__(self)
 
