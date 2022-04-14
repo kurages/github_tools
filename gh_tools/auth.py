@@ -27,6 +27,17 @@ class Auth:
 		login.add_argument("--token", action='store_true', help="login using token")
 		login.set_defaults(subcommand_func=self.login)
 	
+	def _call_back(self, url=None, user_code=None, error=None):
+		if error:
+			pass
+		else:
+			print("\n  ".join([
+				f"Open this link and enter code.",
+				f"URL: {url}",
+				f"code: {user_code}"
+			]))
+
+	
 	def _get_user_code(self):
 		req = post_json_request(Config.CREATE_SESSION_URL,params={
 			"client_id": Config.CLIENT_ID,
@@ -67,10 +78,13 @@ class Auth:
 			else:
 				raise Exception(f"[ERROR] {error}")
 
-	def device_flow(self):
+	def device_flow(self, call_back=None):
 		user_code, device_code = self._get_user_code()
-		print("\n  ".join([f"Open this link and enter code.", f"URL: {Config.VERIFICATION_URL}", f"code: {user_code}"]))
-		webbrowser.open(Config.VERIFICATION_URL)
+		if call_back == None:
+			self._call_back(Config.VERIFICATION_URL, user_code)
+			webbrowser.open(Config.VERIFICATION_URL)
+		else:
+			call_back(Config.VERIFICATION_URL, user_code, None)
 		error, token = self._check_verify_request(device_code)
 		if not error:
 			return token
